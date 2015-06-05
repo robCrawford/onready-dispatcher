@@ -18,7 +18,7 @@ window.ReadyDispatcher = (function() {
         this.responses = {};
         // Any aliases from one label to another
         // format: {"aliased label": "destination label"}
-        this.aliases = null;
+        this.aliases = {};
     }
 
     ReadyDispatcher.prototype = {
@@ -73,14 +73,14 @@ window.ReadyDispatcher = (function() {
         alias: function(map) {
             for (var p in map) {
                 if (map.hasOwnProperty(p)) {
-                    (this.aliases || (this.aliases = {}))[p] = map[p];
+                    this.aliases[p] = map[p];
                 }
             }
         },
 
         // Converts any aliased labels
         getLabel: function(label) {
-            return (this.aliases && this.aliases[label]) || label;
+            return this.aliases[label] || label;
         }
 
     }

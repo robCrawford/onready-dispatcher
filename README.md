@@ -17,24 +17,20 @@ Event dispatcher with `on()`, `trigger()`, and `onready()`.
 var event = new ReadyDispatcher();
 
 // This will run when the event fires
-event.onready("init", function(){
-	console.log('initialised!');
+event.onready("init", function(timestamp){
+	console.log(timestamp);
 });
 
 setTimeout(function(){
-	event.trigger('init');
+	event.trigger('init', Date.now());
 }, 1000);
 
 setTimeout(function(){
 
-	// This will run immediately
-	event.onready("init", function(){
-		console.log('initialised!');
+	// This will run immediately with cached arguments
+	event.onready("init", function(timestamp){
+		console.log(timestamp);
 	});
 
 }, 2000);
 ```
-
-**NOTE:**  
-Arguments supplied to trigger() are cached and supplied to subsequent callbacks.  
-Calling trigger() again will just update the arguments for any future callbacks.  

@@ -30,13 +30,16 @@ describe("Event tests", function(){
 		// Ensure no affect from onready()
 		_event.onready("testEvent2", function(){});
 
+		//Test alias
+		_event.alias({"testEvent2": "eventAlias"});
+
 		_event.on("testEvent2", function(count){
 			callbacksCount++;
 			expect(callbacksCount).toEqual(count);
 		});
 
 		_event.trigger("testEvent2", 1);
-		_event.trigger("testEvent2", 2);
+		_event.trigger("eventAlias", 2);
 		_event.trigger("testEvent2", 3);
 		done();
 
