@@ -27,6 +27,9 @@ describe("Event tests", function(){
 
 		var callbacksCount = 0;
 
+		// Ensure no affect from onready()
+		_event.onready("testEvent2", function(){});
+
 		_event.on("testEvent2", function(count){
 			callbacksCount++;
 			expect(callbacksCount).toEqual(count);
@@ -39,10 +42,13 @@ describe("Event tests", function(){
 
 	});
 
-	it("Should run pending ready() callbacks when event is triggered", function(done){
+	it("Should run pending onready() callbacks when event is triggered", function(done){
 
 		var callbacksCount = 0,
 			triggerCount = 0;
+
+		// Ensure no affect from on()
+		_event.on("testEvent3", function(){});
 
 		_event.onready("testEvent3", function(count){
 			callbacksCount++;
@@ -59,7 +65,7 @@ describe("Event tests", function(){
 
 	});
 
-	it("Should only run ready() callbacks first time event is triggered", function(done){
+	it("Should only run onready() callbacks first time event is triggered", function(done){
 
 		var callbacksCount = 0;
 
@@ -76,7 +82,7 @@ describe("Event tests", function(){
 
 	});
 
-	it("Should then run ready() callbacks immediately, with cached data", function(done){
+	it("Should then run onready() callbacks immediately, with cached data", function(done){
 
 		var callbacksCount = 0;
 
@@ -92,11 +98,11 @@ describe("Event tests", function(){
 			expect(count).toEqual(1);
 		});
 
-		_event.trigger("testEvent5", 7); //Should update response
+		_event.trigger("testEvent5", 7); // Should update response
 
 		_event.onready("testEvent5", function(count){
 			callbacksCount++;
-			expect(count).toEqual(7); //Should still be cached data
+			expect(count).toEqual(7); // Should still be cached data
 		});
 
 		expect(callbacksCount).toEqual(3);
