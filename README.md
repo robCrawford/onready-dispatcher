@@ -1,5 +1,6 @@
 onready-dispatcher
 ==================
+*(No dependencies, 0.8kB minified)*  
 
 Event dispatcher with `on()`, `trigger()`, and `onready()`.  
 
@@ -17,18 +18,18 @@ Event dispatcher with `on()`, `trigger()`, and `onready()`.
 var event = new ReadyDispatcher();
 
 // This will run when the event fires
-event.onready("init", function(timestamp){
+event.onready("init", function(timestamp) {
 	console.log(timestamp);
 });
 
-setTimeout(function(){
+setTimeout(function() {
 	event.trigger('init', Date.now());
 }, 1000);
 
-setTimeout(function(){
+setTimeout(function() {
 
 	// This will run immediately with cached arguments
-	event.onready("init", function(timestamp){
+	event.onready("init", function(timestamp) {
 		console.log(timestamp);
 	});
 

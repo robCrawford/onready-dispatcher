@@ -5,8 +5,7 @@ describe("Event tests", function(){
 
 	it("Should run pending on() callbacks when event is triggered", function(done){
 
-		var callbacksCount = 0,
-			triggerCount = 0;
+		var callbacksCount = 0;
 
 		_event.on("testEvent1", function(){
 			callbacksCount++;
@@ -14,12 +13,12 @@ describe("Event tests", function(){
 		_event.on("testEvent1", function(){
 			callbacksCount++;
 		});
-		_event.on("testEvent1", function(){
+		_event.on("testEvent1", function(num){
 			expect(callbacksCount).toBe(2);
-			expect(triggerCount).toBe(1);
+			expect(num).toBe(1);
 			done();
 		});
-		_event.trigger("testEvent1", triggerCount++);
+		_event.trigger("testEvent1", 1);
 
 	});
 
