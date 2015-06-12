@@ -43,6 +43,23 @@ window.ReadyDispatcher = (function() {
             (this.callbacks.on[label] || (this.callbacks.on[label] = [])).push(callback);
         },
 
+        /** 
+         * Remove a callback for an event label.
+         * @memberof! ReadyDispatcher
+         * @param {string} label - Name of the event
+         * @param {function} callback - Callback to remove
+         */
+        off: function(label, callback) {
+            label = this.getLabel(label);
+            var callbacks = this.callbacks.on[label],
+                i = callbacks.length;
+            while(i--){
+                if(callbacks[i] === callback){
+                    callbacks.splice(i, 1);
+                }
+            }
+        },
+
         /**
          * Register an onready callback for an event label.
          * NOTE: if event has passed, callback will run immediately with cached data.

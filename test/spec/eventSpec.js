@@ -44,26 +44,46 @@ describe("Event tests", function(){
 
 	});
 
+	it("Should remove callback via off()", function(done){
+
+		var callbacksCount = 0,
+			cb = function(){
+				callbacksCount++;
+			}
+
+		_event.on("testEvent3", cb);
+
+		_event.trigger("testEvent3");
+		_event.trigger("testEvent3");
+
+		_event.off("testEvent3", cb);
+
+		_event.trigger("testEvent3");
+		expect(callbacksCount).toEqual(2);
+		done();
+
+	});
+
 	it("Should run pending onready() callbacks when event is triggered", function(done){
 
 		var callbacksCount = 0,
 			triggerCount = 0;
 
 		// Ensure no affect from on()
-		_event.on("testEvent3", function(){});
+		_event.on("testEvent4", function(){});
 
-		_event.onready("testEvent3", function(){
+		_event.onready("testEvent4", function(){
 			callbacksCount++;
 		});
-		_event.onready("testEvent3", function(){
+		_event.onready("testEvent4", function(){
 			callbacksCount++;
 		});
-		_event.onready("testEvent3", function(){
+		_event.onready("testEvent4", function(){
 			expect(callbacksCount).toBe(2);
 			expect(triggerCount).toBe(1);
 			done();
 		});
-		_event.trigger("testEvent3", triggerCount++);
+		_event.trigger("testEvent4", triggerCount++);
 
 	});
 
@@ -71,13 +91,13 @@ describe("Event tests", function(){
 
 		var callbacksCount = 0;
 
-		_event.onready("testEvent4", function(){
+		_event.onready("testEvent5", function(){
 			callbacksCount++;
 		});
 
-		_event.trigger("testEvent4");
-		_event.trigger("testEvent4");
-		_event.trigger("testEvent4");
+		_event.trigger("testEvent5");
+		_event.trigger("testEvent5");
+		_event.trigger("testEvent5");
 
 		expect(callbacksCount).toEqual(1);
 		done();
@@ -88,21 +108,21 @@ describe("Event tests", function(){
 
 		var callbacksCount = 0;
 
-		_event.onready("testEvent5", function(num){
+		_event.onready("testEvent6", function(num){
 			callbacksCount++;
 			expect(num).toEqual(1);
 		});
 
-		_event.trigger("testEvent5", 1);
+		_event.trigger("testEvent6", 1);
 
-		_event.onready("testEvent5", function(num){
+		_event.onready("testEvent6", function(num){
 			callbacksCount++;
 			expect(num).toEqual(1); // Should still be cached data
 		});
 
-		_event.trigger("testEvent5", 7); // Should update response
+		_event.trigger("testEvent6", 7); // Should update response
 
-		_event.onready("testEvent5", function(num){
+		_event.onready("testEvent6", function(num){
 			callbacksCount++;
 			expect(num).toEqual(7); 
 		});

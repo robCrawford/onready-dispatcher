@@ -1,8 +1,12 @@
 onready-dispatcher
 ==================
-*(No dependencies, 0.8kB minified)*  
+*(No dependencies, 1kB minified)*  
 
-Event dispatcher with `on()`, `trigger()`, and `onready()`.  
+Event dispatcher with `on()`, `off()`, `trigger()`, and `onready()`.  
+
+- `on` and `off` have standard pub/sub behaviour.  
+- `onready` is useful when you want the same resolution *any time* a listener is created.  
+For example, to delay an API callback until some data is ready, or respond immediately any time after.  
 
 ***onready*** **behaviour:**  
 - Before event: register callback.  
